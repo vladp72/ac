@@ -13,7 +13,7 @@ namespace cxl {
             other.session_id_ = JET_sesidNil;
         }
 
-        esent_transaction &operator=(esent_transaction &&other) {
+        esent_transaction &operator=(esent_transaction &&other) noexcept {
             if (this != &other) {
                 if (is_valid()) {
                     try_rollback();

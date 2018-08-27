@@ -65,16 +65,16 @@ namespace cxl {
                     //
                     // Get the current parameter to compare with respect to set mode
                     //
-                    JET_API_PTR number_value{ 0 };
+                    JET_API_PTR number_value2{ 0 };
                     if (JET_errSuccess == ::JetGetSystemParameter(instance_id,
                                                                   session_id, 
                                                                   parameter_id,
-                                                                  &number_value,
+                                                                  &number_value2,
                                                                   nullptr,
                                                                   0) &&
-                        (number_value == number_value ||
+                        (number_value == number_value2 ||
                             set_mode == esent_set_mode::failure_ok_if_equal_or_greater &&
-                            number_value > number_value)
+                            number_value > number_value2)
                         ) {
                         err = esent_err::errSuccess;
                         break;
@@ -85,6 +85,8 @@ namespace cxl {
                     //
                     break;
                 }
+                case esent_set_mode::default :
+                    [[fallthrough]];
                 default : {
                     //
                     // Not a valid case

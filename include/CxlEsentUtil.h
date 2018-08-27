@@ -25,9 +25,9 @@ namespace cxl {
 
     inline
         void a_to_u(char const *str,
-            std::wstring *dst,
-            UINT codepage,
-            DWORD flags) {
+                    std::wstring *dst,
+                    UINT codepage,
+                   DWORD flags) {
         DWORD size = ::MultiByteToWideChar(codepage, flags, str, -1, NULL, 0);
         if (size) {
             wbuffer buffer(size + 2, L'\0');
@@ -43,22 +43,22 @@ namespace cxl {
 
     inline
         void a_to_u(std::string const &str,
-            std::wstring *dst,
-            UINT codepage,
-            DWORD flags) {
+                    std::wstring *dst,
+                    UINT codepage,
+                    DWORD flags) {
         a_to_u(str.c_str(),
-            dst,
-            codepage,
-            flags);
+               dst,
+               codepage,
+               flags);
     }
 
     inline
         void u_to_a(wchar_t const *str,
-            std::string *dst,
-            UINT codepage,
-            DWORD flags,
-            char const *default_char,
-            bool *is_default_used)
+                    std::string *dst,
+                    UINT codepage,
+                    DWORD flags,
+                    char const *default_char,
+                    bool *is_default_used)
     {
 
         BOOL is_default_used_tmp = FALSE;
@@ -80,23 +80,23 @@ namespace cxl {
 
     inline
         void u_to_a(std::wstring const &str,
-            std::string *dst,
-            UINT codepage,
-            DWORD flags,
-            char const *default_char,
-            bool *is_default_used) {
+                    std::string *dst,
+                    UINT codepage,
+                    DWORD flags,
+                    char const *default_char,
+                    bool *is_default_used) {
         u_to_a(str.c_str(),
-            dst,
-            codepage,
-            flags,
-            default_char,
-            is_default_used);
+                dst,
+                codepage,
+                flags,
+                default_char,
+                is_default_used);
     }
 
     inline
         std::wstring a_to_u(char const *str,
-            UINT codepage = CP_ACP,
-            DWORD flags = 0) {
+                            UINT codepage = CP_ACP,
+                            DWORD flags = 0) {
         std::wstring dst;
         a_to_u(str, &dst, codepage, flags);
         return dst;
@@ -104,8 +104,8 @@ namespace cxl {
 
     inline
         std::wstring a_to_u(std::string const &str,
-            UINT codepage = CP_ACP,
-            DWORD flags = 0) {
+                            UINT codepage = CP_ACP,
+                            DWORD flags = 0) {
         std::wstring dst;
         a_to_u(str, &dst, codepage, flags);
         return dst;
@@ -113,10 +113,10 @@ namespace cxl {
 
     inline
         std::string u_to_a(wchar_t const *str,
-            UINT codepage = CP_ACP,
-            DWORD flags = 0,
-            char const *default_char = NULL,
-            bool *is_default_used = NULL) {
+                            UINT codepage = CP_ACP,
+                            DWORD flags = 0,
+                            char const *default_char = NULL,
+                            bool *is_default_used = NULL) {
         std::string dst;
         u_to_a(str, &dst, codepage, flags, default_char, is_default_used);
         return dst;
@@ -124,10 +124,10 @@ namespace cxl {
 
     inline
         std::string u_to_a(std::wstring const &str,
-            UINT codepage = CP_ACP,
-            DWORD flags = 0,
-            char const *default_char = NULL,
-            bool *is_default_used = NULL) {
+                            UINT codepage = CP_ACP,
+                            DWORD flags = 0,
+                            char const *default_char = NULL,
+                            bool *is_default_used = NULL) {
         std::string dst;
         u_to_a(str, &dst, codepage, flags, default_char, is_default_used);
         return dst;

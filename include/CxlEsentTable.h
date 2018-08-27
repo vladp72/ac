@@ -1272,6 +1272,7 @@ namespace cxl {
         std::error_code try_create_index(TCHAR const *index_name,
                                          JET_INDEXCREATE &index_info,
                                          unsigned long index_create) noexcept {
+            index_name;
             std::error_code err = make_esent_error_code(
                 JetCreateIndex2(session_id_,
                                 table_id_,
@@ -1295,6 +1296,7 @@ namespace cxl {
         std::error_code try_create_index(TCHAR const *index_name,
                                          JET_INDEXCREATE2 &index_info,
                                          unsigned long index_create) noexcept {
+            index_name;
             std::error_code err = make_esent_error_code(
                 JetCreateIndex3(session_id_,
                                 table_id_,
@@ -1318,6 +1320,7 @@ namespace cxl {
         std::error_code try_create_index(TCHAR const *index_name,
                                          JET_INDEXCREATE3 &index_info,
                                          unsigned long index_create) noexcept {
+            index_name;
             std::error_code err = make_esent_error_code(
                 JetCreateIndex4(session_id_,
                                 table_id_,

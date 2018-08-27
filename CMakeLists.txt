@@ -1,5 +1,10 @@
-﻿# CMakeList.txt : Top-level CMake project file, do global configuration
-# and include sub-projects here.
+﻿# CMakeList.txt : 
+# based on https://rix0r.nl/blog/2015/08/13/cmake-guide/ 
+# alse see 
+#     https://www.slideshare.net/DanielPfeifer1/cmake-48475415
+#     https://cliutils.gitlab.io/modern-cmake/
+#     https://codingnest.com/basic-cmake/
+#     https://codingnest.com/basic-cmake-part-2/
 #
 cmake_minimum_required (VERSION 3.8)
 
@@ -13,15 +18,17 @@ add_definitions("-DJET_UNICODE")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++lastest")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /P")
 
-#nable_testing()
+enable_testing()
 
 add_library (esenthelpers STATIC
              "src/CxlEsentLibrary.cpp" 
              "src/CxlEsentErrors.cpp")
+
+if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
+    target_compile_options( esenthelpers PRIVATE /W4 /w44265 /w44061 /w44062 )
+endif()
 
 # Define headers for this library. PUBLIC headers are used for
 # compiling the library, and will be added to consumers' build
@@ -58,6 +65,11 @@ export(TARGETS esenthelpers FILE esenthelpersconfig.cmake)
 add_executable(esenttestlib
                test/main.cpp
                test/CxlEsentTestErrors.cpp)
+
+if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
+    target_compile_options( esenttestlib PRIVATE /W4 /w44265 /w44061 /w44062 )
+endif()
+
 
 target_link_libraries(esenttestlib
                       esenthelpers)
