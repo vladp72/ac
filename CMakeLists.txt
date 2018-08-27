@@ -30,6 +30,8 @@ if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
     target_compile_options( esenthelpers PRIVATE /W4 /w44265 /w44061 /w44062 )
 endif()
 
+target_compile_definitions(esenthelpers PUBLIC UNICODE _UNICODE JET_UNICODE)
+
 # Define headers for this library. PUBLIC headers are used for
 # compiling the library, and will be added to consumers' build
 # paths.
@@ -42,7 +44,11 @@ target_include_directories(esenthelpers PUBLIC
 # here
 target_compile_features(esenthelpers
                         PUBLIC cxx_auto_type
-                        PRIVATE cxx_variadic_templates)
+                        PUBLIC cxx_final
+                        PUBLIC cxx_deleted_functions
+                        PUBLIC cxx_defaulted_functions
+                        PUBLIC cxx_attributes
+                        PUBLIC cxx_variadic_templates)
 
 # 'make install' to the correct locations (provided by GNUInstallDirs).
 install(TARGETS esenthelpers 
