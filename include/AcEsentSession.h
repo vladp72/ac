@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace cxl {
+namespace ac {
 
     class esent_session {
     public:
@@ -231,9 +231,9 @@ namespace cxl {
                                      grbit);
         }
         //
-        // cxl::esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
+        // esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
         //                         file has already been attached by this session.
-        // cxl::esent_err::wrnFileOpenReadOnly indicates that the file was attached read-only, but
+        // esent_err::wrnFileOpenReadOnly indicates that the file was attached read-only, but
         //                         JetCreateDatabase did not pass JET_bitDbReadOnly. 
         //                         The database is still opened with read-only access.
         //
@@ -270,9 +270,9 @@ namespace cxl {
             return std::make_pair(std::move(database), err);
         }
         //
-        // cxl::esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
+        // esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
         //                         file has already been attached by this session.
-        // cxl::esent_err::wrnFileOpenReadOnly indicates that the file was attached read-only, but
+        // esent_err::wrnFileOpenReadOnly indicates that the file was attached read-only, but
         //                         JetCreateDatabase did not pass JET_bitDbReadOnly. 
         //                         The database is still opened with read-only access.
         //
@@ -314,7 +314,7 @@ namespace cxl {
         }
 
         //
-        // cxl::esent_err::wrnFileOpenReadOnly indicates that the file was attached read-only, but
+        // esent_err::wrnFileOpenReadOnly indicates that the file was attached read-only, but
         //                         JetCreateDatabase did not pass JET_bitDbReadOnly. 
         //                         The database is still opened with read-only access.
         //
@@ -351,7 +351,7 @@ namespace cxl {
             return std::make_pair(std::move(database), err);
         }
         //
-        // cxl::esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
+        // esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
         //                         file has already been attached by this session.
         //
         std::error_code try_attach_database(TCHAR const *file_name,
@@ -378,7 +378,7 @@ namespace cxl {
             return err;
         }
         //
-        // cxl::esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
+        // esent_err::wrnDatabaseAttached A nonfatal warning indicating that the database 
         //                         file has already been attached by this session.
         //
         std::error_code try_attach_database(TCHAR const *file_name,

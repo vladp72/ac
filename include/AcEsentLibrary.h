@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace cxl {
+namespace ac {
 
     enum class esent_set_mode : int {
         default,
@@ -52,7 +52,7 @@ namespace cxl {
         }
     };
 
-    //using esent_system_parameter_value = std::variant<unsigned long, cxl::tstring>;
+    //using esent_system_parameter_value = std::variant<unsigned long, tstring>;
 
     //
     // By default Esent is in single instance mode.

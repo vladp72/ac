@@ -15,7 +15,7 @@
 //
 // Forward declarations
 //
-namespace cxl {
+namespace ac {
     class esent_library;
     class esent_error_condition_category_t;
     class esent_error_category_t;
@@ -29,15 +29,15 @@ namespace cxl {
     class esent_callback_id;
 }
 
-#include "CxlEsentUtil.h"
-#include "CxlEsentErrors.h"
-#include "CxlEsentLibrary.h"
-#include "CxlEsentFile.h"
-#include "CxlEsentSnapshot.h"
-#include "CxlEsentCallbackId.h"
-#include "CxlEsentTable.h"
-#include "CxlEsentDatabase.h"
-#include "CxlEsentTransaction.h"
-#include "CxlEsentSession.h"
-#include "CxlEsentInstance.h"
-#include "CxlEsentSchema.h"
+#include "AcEsentUtil.h"
+#include "AcEsentErrors.h"
+#include "AcEsentLibrary.h"
+#include "AcEsentFile.h"
+#include "AcEsentSnapshot.h"
+#include "AcEsentCallbackId.h"
+#include "AcEsentTable.h"
+#include "AcEsentDatabase.h"
+#include "AcEsentTransaction.h"
+#include "AcEsentSession.h"
+#include "AcEsentInstance.h"
+#include "AcEsentSchema.h"

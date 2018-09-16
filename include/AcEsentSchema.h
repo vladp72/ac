@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace cxl {
+namespace ac {
 
     //#define JET_coltypNil               0
     //#define JET_coltypBit               1    /* True, False, or NULL */
@@ -33,9 +33,9 @@ namespace cxl {
     template<> struct esent_col_type_id<JET_coltypCurrency>         { using type = long long; };          // 8 byte integer, signed
     template<> struct esent_col_type_id<JET_coltypIEEESingle>       { using type = double; };             // 4-byte IEEE single precision
     template<> struct esent_col_type_id<JET_coltypIEEEDouble>       { using type = float; };              // 8-byte IEEE double precision
-    template<> struct esent_col_type_id<JET_coltypBinary>           { using type = cxl::cbuffer; };       // Binary data, < 255 bytes
+    template<> struct esent_col_type_id<JET_coltypBinary>           { using type = cbuffer; };            // Binary data, < 255 bytes
     template<> struct esent_col_type_id<JET_coltypText>             { using type = std::string; };        // ANSI text, case insensitive, < 255 bytes
-    template<> struct esent_col_type_id<JET_coltypLongBinary>       { using type = cxl::cbuffer; };       // Binary data, long value
+    template<> struct esent_col_type_id<JET_coltypLongBinary>       { using type = cbuffer; };            // Binary data, long value
     template<> struct esent_col_type_id<JET_coltypLongText>         { using type = std::string;};         // ANSI text, long value
     template<> struct esent_col_type_id<JET_coltypUnsignedLong>     { using type = unsigned long; };      // 4-byte unsigned integer
     template<> struct esent_col_type_id<JET_coltypLongLong>         { using type = long long; };          // 8-byte signed integer
@@ -56,7 +56,7 @@ namespace cxl {
     //template<> struct esent_cpp_type<long long>        { enum { id = JET_coltypCurrency }; };
     template<> struct esent_cpp_type<double>             { enum { id = JET_coltypIEEESingle }; };
     template<> struct esent_cpp_type<float>              { enum { id = JET_coltypIEEEDouble }; };
-    template<> struct esent_cpp_type<cxl::cbuffer>       { enum { id = JET_coltypBinary }; };
+    template<> struct esent_cpp_type<cbuffer>            { enum { id = JET_coltypBinary }; };
     template<> struct esent_cpp_type<std::string>        { enum { id = JET_coltypText }; };
     template<> struct esent_cpp_type<unsigned long>      { enum { id = JET_coltypUnsignedLong }; };
     template<> struct esent_cpp_type<long long>          { enum { id = JET_coltypLongLong }; };
@@ -83,7 +83,7 @@ namespace cxl {
                                        float,
                                        double,
                                        GUID,
-                                       cxl::cbuffer,
+                                       cbuffer,
                                        std::string>;
 
     using esent_ovariant = std::variant<esent_empty_t,
@@ -100,7 +100,7 @@ namespace cxl {
                                         std::optional<float>,
                                         std::optional<double>,
                                         std::optional<GUID>,
-                                        std::optional<cxl::cbuffer>,
+                                        std::optional<cbuffer>,
                                         std::optional<std::string>>;
 
     using esent_optional_variant = std::optional<esent_variant>;
@@ -183,23 +183,23 @@ namespace cxl {
             using t_t = std::remove_cv_t<
                             std::remove_reference_t<decltype(v)>
                         >;
-            if constexpr (std::is_same_v<T, cxl::cbuffer> ||
+            if constexpr (std::is_same_v<T, cbuffer> ||
                           std::is_same_v<T, std::string>) {
                 return esent_value_buf{
-                    cxl::esent_cpp_type<t_t>::id,
+                    esent_cpp_type<t_t>::id,
                     static_cast<unsigned long>(v.size() * sizeof(v[0])),
                     v.size() ? reinterpret_cast<void *>(&v[0]) : nullptr
                 };
-            } else if constexpr (std::is_same_v<T, cxl::esent_empty_t> ||
+            } else if constexpr (std::is_same_v<T, esent_empty_t> ||
                                  std::is_same_v<T, std::nullptr_t>) {
                 return esent_value_buf{
-                    cxl::esent_cpp_type<t_t>::id,
+                    esent_cpp_type<t_t>::id,
                     0,
                     nullptr
                 };
             } else {
                 return esent_value_buf{
-                    cxl::esent_cpp_type<t_t>::id,
+                    esent_cpp_type<t_t>::id,
                     static_cast<unsigned long>(sizeof(v)),
                     reinterpret_cast<void *>(&v)
                 };
@@ -210,23 +210,23 @@ namespace cxl {
             using t_t = std::remove_cv_t<
                             std::remove_reference_t<decltype(v)>
                         >;
-            if constexpr (std::is_same_v<T, cxl::cbuffer> ||
+            if constexpr (std::is_same_v<T, cbuffer> ||
                           std::is_same_v<T, std::string>) {
                 return esent_cvalue_buf{
-                    cxl::esent_cpp_type<t_t>::id,
+                    esent_cpp_type<t_t>::id,
                     static_cast<unsigned long>(v.size() * sizeof(v[0])),
                     v.size() ? reinterpret_cast<void const *>(&v[0]) : nullptr
                 };
-            } else if constexpr (std::is_same_v<T, cxl::esent_empty_t> ||
+            } else if constexpr (std::is_same_v<T, esent_empty_t> ||
                                  std::is_same_v<T, std::nullptr_t>) {
                 return esent_cvalue_buf{
-                    cxl::esent_cpp_type<t_t>::id,
+                    esent_cpp_type<t_t>::id,
                     0,
                     nullptr
                 };
             } else {
                 return esent_cvalue_buf{
-                    cxl::esent_cpp_type<t_t>::id,
+                    esent_cpp_type<t_t>::id,
                     static_cast<unsigned long>(sizeof(v)),
                     reinterpret_cast<void const *>(&v)
                 };
@@ -268,9 +268,9 @@ namespace cxl {
             using t_t = std::remove_cv_t<
                             std::remove_reference_t<decltype(v)>
                         >;
-            if constexpr (std::is_same_v<T, cxl::esent_empty_t> ||
+            if constexpr (std::is_same_v<T, esent_empty_t> ||
                           std::is_same_v<T, std::nullptr_t>) {
-                return esent_cvalue_buf{ cxl::esent_cpp_type<t_t>::id,
+                return esent_cvalue_buf{ esent_cpp_type<t_t>::id,
                                          0,
                                          nullptr};
             } else {
@@ -285,9 +285,9 @@ namespace cxl {
             using t_t = std::remove_cv_t<
                             std::remove_reference_t<decltype(v)>
                         >;
-            if constexpr (std::is_same_v<T, cxl::esent_empty_t> ||
+            if constexpr (std::is_same_v<T, esent_empty_t> ||
                           std::is_same_v<T, std::nullptr_t>) {
-                return esent_cvalue_buf{ cxl::esent_cpp_type<t_t>::id,
+                return esent_cvalue_buf{ esent_cpp_type<t_t>::id,
                                          0,
                                          nullptr };
             } else {
@@ -301,22 +301,22 @@ namespace cxl {
     };
 
     inline
-    int esent_variant_to_col_type_id(cxl::esent_variant const &v) {
+    int esent_variant_to_col_type_id(esent_variant const &v) {
         int col_type_id{ JET_coltypNil };
         std::visit([&col_type_id](auto const &v) {
             using t_t = std::remove_cv_t<std::remove_reference_t<decltype(v)>>;
-            col_type_id = cxl::esent_cpp_type<t_t>::id;
+            col_type_id = esent_cpp_type<t_t>::id;
         },
         v);
         return col_type_id;
     }
 
     inline
-    int esent_variant_to_col_type_id(cxl::esent_ovariant const &v) {
+    int esent_variant_to_col_type_id(esent_ovariant const &v) {
         int col_type_id{ JET_coltypNil };
         std::visit([&col_type_id](auto const &v) {
             using t_t = std::remove_cv_t<std::remove_reference_t<decltype(v)>>;
-            col_type_id = cxl::esent_cpp_type<t_t>::id;
+            col_type_id = esent_cpp_type<t_t>::id;
         },
         v);
         return col_type_id;
@@ -325,17 +325,17 @@ namespace cxl {
     template <typename T>
     esent_cvalue_buf get_esent_value_buf(T const &v) {
         using t_t = std::remove_cv_t<std::remove_reference_t<decltype(v)>>;
-        return cxl::esent_value<t_t>::value_buffer(v);
+        return esent_value<t_t>::value_buffer(v);
     }
 
     template <typename T>
     esent_value_buf get_esent_value_buf(T &v) {
         using t_t = std::remove_cv_t<std::remove_reference_t<decltype(v)>>;
-        return cxl::esent_value<std::remove_cv_t<std::remove_reference_t<decltype(v)>>>::value_buffer(v);
+        return esent_value<std::remove_cv_t<std::remove_reference_t<decltype(v)>>>::value_buffer(v);
     }
 
     inline
-    esent_cvalue_buf get_esent_value_buf(cxl::esent_variant const &var) {
+    esent_cvalue_buf get_esent_value_buf(esent_variant const &var) {
         esent_cvalue_buf value_buf;
         std::visit([&value_buf](auto const &val) {
             value_buf = get_esent_value_buf(val);
@@ -345,7 +345,7 @@ namespace cxl {
     }
 
     inline
-    esent_value_buf get_esent_value_buf(cxl::esent_variant &var) {
+    esent_value_buf get_esent_value_buf(esent_variant &var) {
         esent_value_buf value_buf;
         std::visit([&value_buf](auto &val) {
             value_buf = get_esent_value_buf(val);
@@ -355,7 +355,7 @@ namespace cxl {
     }
 
     inline
-    esent_cvalue_buf get_esent_value_buf(cxl::esent_ovariant const &var) {
+    esent_cvalue_buf get_esent_value_buf(esent_ovariant const &var) {
         esent_cvalue_buf value_buf;
         std::visit([&value_buf](auto const &val) {
             value_buf = get_esent_value_buf(val);
@@ -365,7 +365,7 @@ namespace cxl {
     }
 
     inline
-    esent_value_buf get_esent_value_buf(cxl::esent_ovariant &var) {
+    esent_value_buf get_esent_value_buf(esent_ovariant &var) {
         esent_value_buf value_buf;
         std::visit([&value_buf](auto &val) {
             value_buf = get_esent_value_buf(val);
@@ -376,11 +376,11 @@ namespace cxl {
 }
 
 #define ESENT_INIT_DEFAULT_VALUE_BUFFER(CONTAINER, VALUE) \
-[&CONTAINER]()->cxl::esent_default_value_buf { \
+[&CONTAINER]()->ac::esent_default_value_buf { \
     using esent_container_ptr_t = decltype(std::addressof(CONTAINER)); \
-    return cxl::esent_default_value_buf{ \
+    return ac::esent_default_value_buf{ \
         reinterpret_cast<void *>(std::addressof(CONTAINER)), \
-        static_cast<cxl::esent_set_value_fn_t>([](void *container) { \
+        static_cast<ac::esent_set_value_fn_t>([](void *container) { \
             *reinterpret_cast<esent_container_ptr_t>(container) = (VALUE); \
         }) \
     }; \

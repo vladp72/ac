@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace cxl {
+namespace ac {
     //
     // 1. create_instance creates a handle
     // 2. set parameters
@@ -473,7 +473,7 @@ namespace cxl {
                                     &file_size_high));
             if (file_handle != 0) {
                 file.attach(file_handle, instance_);
-                *file_size = cxl_MakeQWORD(file_size_low, file_size_high);
+                *file_size = ac_MakeQWORD(file_size_low, file_size_high);
             }
             return err;
         }

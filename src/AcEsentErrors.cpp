@@ -1,6 +1,6 @@
-﻿#include "CxlEsent.h"
+﻿#include "AcEsent.h"
 
-namespace cxl {
+namespace ac {
 
     esent_error_severity_category_t const esent_error_severity_category_t::esent_error_condition_severity_singleton;
 
@@ -97,7 +97,7 @@ namespace cxl {
 #define ESENT_WRN_ENTRY_SHORT(symbol, code, str) case esent_err::wrns##symbol : return std::string(ESENT_STRINGIFY(wrn##symbol));
 #define ESENT_ALIASE_ERR_ENTRY(symbol1, symbol2)
 #define ESENT_ALIASE_WRN_ENTRY(symbol1, symbol2)
-#include "CxlEsentErrors.inc"
+#include "AcEsentErrors.inc"
 #undef ESENT_SUCCESS_ENTRY
 #undef ESENT_ERR_ENTRY
 #undef ESENT_WRN_ENTRY
@@ -118,7 +118,7 @@ namespace cxl {
 #define ESENT_WRN_ENTRY_SHORT(symbol, code, str) case esent_err::wrns##symbol : return std::string(str);
 #define ESENT_ALIASE_ERR_ENTRY(symbol1, symbol2)
 #define ESENT_ALIASE_WRN_ENTRY(symbol1, symbol2)
-#include "CxlEsentErrors.inc"
+#include "AcEsentErrors.inc"
 #undef ESENT_SUCCESS_ENTRY
 #undef ESENT_ERR_ENTRY
 #undef ESENT_WRN_ENTRY
@@ -139,7 +139,7 @@ namespace cxl {
 #define ESENT_WRN_ENTRY_SHORT(symbol, code, str) case esent_err::wrns##symbol : return std::string(ESENT_STRINGIFY(wrn##symbol) ". " str);
 #define ESENT_ALIASE_ERR_ENTRY(symbol1, symbol2)
 #define ESENT_ALIASE_WRN_ENTRY(symbol1, symbol2)
-#include "CxlEsentErrors.inc"
+#include "AcEsentErrors.inc"
 #undef ESENT_SUCCESS_ENTRY
 #undef ESENT_ERR_ENTRY
 #undef ESENT_WRN_ENTRY
@@ -171,15 +171,15 @@ namespace cxl {
 }
 
 std::error_category const &esent_error_severity_category() noexcept {
-    return cxl::esent_error_severity_category_t::esent_error_condition_severity_singleton;
+    return ac::esent_error_severity_category_t::esent_error_condition_severity_singleton;
 }
 
 std::error_category const &esent_error_condition_category() noexcept {
-    return cxl::esent_error_condition_category_t::esent_error_condition_category_singleton;
+    return ac::esent_error_condition_category_t::esent_error_condition_category_singleton;
 }
 
 std::error_category const &esent_error_category() noexcept {
-    return cxl::esent_error_category_t::esent_error_category_singleton;
+    return ac::esent_error_category_t::esent_error_category_singleton;
 }
 
 

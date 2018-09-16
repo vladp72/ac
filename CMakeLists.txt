@@ -23,8 +23,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 enable_testing()
 
 add_library (esenthelpers STATIC
-             "src/CxlEsentLibrary.cpp" 
-             "src/CxlEsentErrors.cpp")
+             "src/AcEsentLibrary.cpp" 
+             "src/AcEsentErrors.cpp")
 
 if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
     target_compile_options( esenthelpers PRIVATE /W4 /w44265 /w44061 /w44062 )
@@ -70,7 +70,9 @@ export(TARGETS esenthelpers FILE esenthelpersconfig.cmake)
 # Unit tests, of course
 add_executable(esenttestlib
                test/main.cpp
-               test/CxlEsentTestErrors.cpp)
+               test/AcEsentTestErrors.cpp
+	       test/AcEsentTestInstance.cpp
+	       test/AcEsentTestVariant.cpp)
 
 if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
     target_compile_options( esenttestlib PRIVATE /W4 /w44265 /w44061 /w44062 )

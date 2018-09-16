@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace cxl {
+namespace ac {
 
     using esent_column_info_ptr = crt_unique_ptr<JET_ENUMCOLUMN>;
 

@@ -7,11 +7,11 @@
 #define JET_CODDING_ERROR_IF(cond) if(!(cond)) {} else {DebugBreak();}
 #define JET_CODDING_ERROR_IF_NOT(cond) if(cond) {} else {DebugBreak();}
 #define SANITIZE_CSTR_FOR_PRINTF(s) (s ? s : _T(""))
-#define cxl_MakeQWORD(l, h) ((static_cast<unsigned long long>(h) << 32Ull) | static_cast<unsigned long long>(l))
+#define ac_MakeQWORD(l, h) ((static_cast<unsigned long long>(h) << 32Ull) | static_cast<unsigned long long>(l))
 #define CPPBOOL(v) ((v) ? true : false)
 #define WINBOOL(v) ((v) ? TRUE : FALSE)
 
-namespace cxl {
+namespace ac {
 
     typedef std::vector<TCHAR> tbuffer;
     typedef std::vector<char> cbuffer;
@@ -374,7 +374,7 @@ namespace cxl {
     }
 }
 
-namespace cxl {
+namespace ac {
 
     class crt_allocator_base {
     public:
@@ -484,10 +484,10 @@ namespace cxl {
         static inline std::wstring const null_value;
         static inline std::wstring const default_value;
     };
-    template <> struct esent_nullable_type<cxl::cbuffer> : public std::true_type {
+    template <> struct esent_nullable_type<cbuffer> : public std::true_type {
         enum { value = 1 };
-        static inline cxl::cbuffer const null_value;
-        static inline cxl::cbuffer const default_value;
+        static inline cbuffer const null_value;
+        static inline cbuffer const default_value;
     };
 
     template <typename T >

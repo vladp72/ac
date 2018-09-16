@@ -2,7 +2,7 @@
 //
 // Define enumiration in jet namespace
 //
-namespace cxl {
+namespace ac {
     //
     // error code enumiration
     //
@@ -13,7 +13,7 @@ namespace cxl {
 #define ESENT_WRN_ENTRY_SHORT(symbol, code, str) wrns##symbol = wrn##symbol,
 #define ESENT_ALIASE_ERR_ENTRY(symbol1, symbol2)
 #define ESENT_ALIASE_WRN_ENTRY(symbol1, symbol2)
-#include "CxlEsentErrors.inc"
+#include "AcEsentErrors.inc"
 #undef ESENT_SUCCESS_ENTRY
 #undef ESENT_ERR_ENTRY
 #undef ESENT_WRN_ENTRY
@@ -97,7 +97,7 @@ namespace std {
     // error condition
     //
     template <>
-    struct is_error_code_enum<cxl::esent_err> : public true_type {};
+    struct is_error_code_enum<ac::esent_err> : public true_type {};
     //
     // JET_ERR is defined as long
     // 
@@ -108,24 +108,24 @@ namespace std {
     struct is_error_condition_enum<JET_ERRCAT> : public true_type {};
 
     template <>
-    struct is_error_condition_enum<cxl::esent_err_category> : public true_type {};
+    struct is_error_condition_enum<ac::esent_err_category> : public true_type {};
 
     template <>
-    struct is_error_condition_enum<cxl::esent_err_severity> : public true_type {};
+    struct is_error_condition_enum<ac::esent_err_severity> : public true_type {};
 }
 
 std::error_category const &esent_error_category() noexcept;
 std::error_category const &esent_error_condition_category() noexcept;
 std::error_category const &esent_error_severity_category() noexcept;
 
-namespace cxl {
+namespace ac {
 
     class esent_error_severity_category_t
         : public std::error_category {
     public:
 
         virtual char const* name() const noexcept override {
-            return "cxl_esent_error_severity";
+            return "ac_esent_error_severity";
         }
 
         static bool is_error_severity(int err, int severity);
@@ -154,8 +154,8 @@ namespace cxl {
     }*/
 
     inline
-    bool is_esent_severity(std::error_code const &err, cxl::esent_err_severity severity) {
-        return cxl::esent_error_severity_category_t::is_error_severity(err.value(), static_cast<int>(severity));
+    bool is_esent_severity(std::error_code const &err, esent_err_severity severity) {
+        return esent_error_severity_category_t::is_error_severity(err.value(), static_cast<int>(severity));
     }
     
     class esent_error_condition_category_t
@@ -163,7 +163,7 @@ namespace cxl {
     public:
 
         virtual char const* name() const noexcept override {
-            return "cxl_esent_error_category";
+            return "ac_esent_error_category";
         }
         //
         // query information about Jet error category
@@ -208,7 +208,7 @@ namespace cxl {
     public:
 
         virtual char const* name() const noexcept override {
-            return "cxl_esent_error";
+            return "ac_esent_error";
         }
         //
         // Converts Jet error to HRESULT
@@ -274,7 +274,7 @@ std::error_code make_esent_error_code(JET_ERR e) {
 }
 
 inline
-std::error_code make_esent_error_condition(cxl::esent_err_category e) {
+std::error_code make_esent_error_condition(ac::esent_err_category e) {
     return std::error_code(static_cast<int>(e), 
                            esent_error_condition_category());
 }
@@ -286,7 +286,7 @@ std::error_code make_esent_error_condition(JET_ERRCAT e) {
 }
 
 inline
-std::error_code make_esent_error_severity(cxl::esent_err_severity e) {
+std::error_code make_esent_error_severity(ac::esent_err_severity e) {
     return std::error_code(static_cast<int>(e),
                            esent_error_severity_category());
 }
@@ -298,18 +298,18 @@ std::error_code make_esent_error_severity(cxl::esent_err_severity e) {
     throw std::system_error{(__err), (__reason)}
 
 #define ESENT_THROW_FMT(__err, __fmt, ...) \
-    throw std::system_error{(__err), cxl::make_string((__fmt), __VA_ARGS__).c_str()}
+    throw std::system_error{(__err), ac::make_string((__fmt), __VA_ARGS__).c_str()}
 
 #define ESENT_THROW_IF(__condition, __err, __reason) \
     if (!(__condition)) ; else throw std::system_error{(__err), (__reason)}
 
 #define ESENT_THROW_IF_FMT(__condition, __err, __fmt, ...) \
-    if (!(__condition)) ; else throw std::system_error{(__err), cxl::make_string((__fmt), __VA_ARGS__).c_str()};
+    if (!(__condition)) ; else throw std::system_error{(__err), ac::make_string((__fmt), __VA_ARGS__).c_str()};
 
 #define ESENT_THROW_ON_ERROR(__err, __reason) \
-    if (!cxl::is_esent_severity((__err), cxl::esent_err_severity::error)) ; else throw std::system_error{(__err), (__reason)}
+    if (!ac::is_esent_severity((__err), ac::esent_err_severity::error)) ; else throw std::system_error{(__err), (__reason)}
 
 #define ESENT_THROW_ON_ERROR_FMT(__err, __fmt, ...) \
-    if (!cxl::is_esent_severity((__err), cxl::esent_err_severity::error)) ; else throw std::system_error{(__err), cxl::make_string((__fmt), __VA_ARGS__).c_str()}
+    if (!ac::is_esent_severity((__err), ac::esent_err_severity::error)) ; else throw std::system_error{(__err), ac::make_string((__fmt), __VA_ARGS__).c_str()}
 
 #define ESENT_RETURN_ON_ERROR(__err) if ((__err) == esent_err_severity::error) {return (__err);} else {}
