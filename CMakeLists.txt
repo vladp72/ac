@@ -8,7 +8,7 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-project ("esenthelpers" VERSION 0.1 LANGUAGES CXX)
+project ("ac" VERSION 0.1 LANGUAGES CXX)
 
 add_definitions("-DUNICODE")
 add_definitions("-D_UNICODE")
@@ -22,27 +22,27 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 enable_testing()
 
-add_library (esenthelpers STATIC
+add_library (ac STATIC
              "src/AcEsentLibrary.cpp" 
              "src/AcEsentErrors.cpp")
 
 if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-    target_compile_options( esenthelpers PRIVATE /W4 /w44265 /w44061 /w44062 )
+    target_compile_options( ac PRIVATE /W4 /w44265 /w44061 /w44062 )
 endif()
 
-target_compile_definitions(esenthelpers PUBLIC UNICODE _UNICODE JET_UNICODE)
+target_compile_definitions(ac PUBLIC UNICODE _UNICODE JET_UNICODE)
 
 # Define headers for this library. PUBLIC headers are used for
 # compiling the library, and will be added to consumers' build
 # paths.
-target_include_directories(esenthelpers PUBLIC
+target_include_directories(ac PUBLIC
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                            $<INSTALL_INTERFACE:include>
                            PRIVATE src)
 
 # If we have compiler requirements for this library, list them
 # here
-target_compile_features(esenthelpers
+target_compile_features(ac
                         PUBLIC cxx_auto_type
                         PUBLIC cxx_final
                         PUBLIC cxx_deleted_functions
@@ -51,8 +51,8 @@ target_compile_features(esenthelpers
                         PUBLIC cxx_variadic_templates)
 
 # 'make install' to the correct locations (provided by GNUInstallDirs).
-install(TARGETS esenthelpers 
-        EXPORT esenthelpersconfig
+install(TARGETS ac 
+        EXPORT acconfig
         ARCHIVE  DESTINATION lib ${CMAKE_INSTALL_LIBDIR}
         LIBRARY  DESTINATION lib ${CMAKE_INSTALL_LIBDIR}
         RUNTIME  DESTINATION bin ${CMAKE_INSTALL_BINDIR})  # This is for Windows
@@ -62,27 +62,27 @@ install(DIRECTORY include/ DESTINATION include ${CMAKE_INSTALL_INCLUDEDIR})
 # This makes the project importable from the install directory
 # Put config file in per-project dir (name MUST match), can also
 # just go into 'cmake'.
-install(EXPORT esenthelpersconfig DESTINATION share/esenthelpers/cmake)
+install(EXPORT acconfig DESTINATION share/ac/cmake)
 
 # This makes the project importable from the build directory
-export(TARGETS esenthelpers FILE esenthelpersconfig.cmake)
+export(TARGETS ac FILE acconfig.cmake)
 
 # Unit tests, of course
-add_executable(esenttestlib
+add_executable(actest
                test/main.cpp
                test/AcEsentTestErrors.cpp
 	       test/AcEsentTestInstance.cpp
 	       test/AcEsentTestVariant.cpp)
 
 if ( CMAKE_CXX_COMPILER_ID MATCHES "MSVC" )
-    target_compile_options( esenttestlib PRIVATE /W4 /w44265 /w44061 /w44062 )
+    target_compile_options( actest PRIVATE /W4 /w44265 /w44061 /w44062 )
 endif()
 
 
-target_link_libraries(esenttestlib
-                      esenthelpers)
+target_link_libraries(actest
+                      ac)
 
-add_test(esenttestlib esenttestlib)
+add_test(actest actest)
 
 
 
